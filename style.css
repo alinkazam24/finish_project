@@ -80,6 +80,10 @@ a {
     color: rgb(0, 0, 0);
 }
 
+.link{
+    color: white;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;

@@ -12,7 +12,7 @@
     <div class="form-container">
         <button class="button"><a href="index.html">back</a></button>
 
-        <form action="ok.html" method="get" class="form">
+        <form id="registerForm" class="form">
             <h2>Register</h2>
 
 
@@ -98,8 +98,34 @@
             <div class="form-button">
                 <button type="submit" class="button">Register</button>
             </div>
+            <p style="text-align:center; margin-top:10px; color:#fff;">Уже есть аккаунт? <a class="link" href="login.html">Войти</a></p>
         </form>
     </div>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const firstName = document.getElementById('first name').value.trim();
+            const lastName = document.getElementById('last name').value.trim();
+
+            if (!username || !password) {
+                alert('Введите username и пароль');
+                return;
+            }
+
+            const res = await window.auth.registerUser({ username, password, email, firstName, lastName });
+            if (res.success) {
+                localStorage.setItem('fp_currentUser', username);
+                window.location.href = 'ok.html';
+            } else {
+                alert(res.message || 'Ошибка регистрации');
+            }
+        });
+    </script>
 
 </body>
 

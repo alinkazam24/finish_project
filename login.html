@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <button class="button"><a href="index.html">back</a></button>
+
+        <form id="loginForm" class="form">
+            <h2>Login</h2>
+
+            <div class="form-group username">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="login-username" required>
+            </div>
+
+            <div class="form-group password">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required>
+            </div>
+
+            <div class="form-button">
+                <button type="submit" class="button">Login</button>
+            </div>
+            <p style="text-align:center; margin-top:10px; color:#fff;">Нет аккаунта? <a class="link" href="register.html">Зарегистрироваться</a></p>
+        </form>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) { alert('Введите username и пароль'); return; }
+            const res = await window.auth.verifyLogin(username, password);
+            if (res.success) {
+                localStorage.setItem('fp_currentUser', username);
+                window.location.href = 'ok.html';
+            } else {
+                alert(res.message || 'Ошибка входа');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
